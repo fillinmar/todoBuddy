@@ -5,8 +5,7 @@ const { ObjectId } = require("mongodb");
 
 const  getCollection = () =>{
     const client = getConnectedClient();
-    const collection = client.db("todosbd").collection("todos");
-    return collection;
+    return client.db("todosbd").collection("todos");
 }
 
 //GET /todos
