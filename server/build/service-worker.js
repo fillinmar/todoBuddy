@@ -1,15 +1,16 @@
 const staticCacheName ='a-app-v2';
-const dynamicCacheName = 'd-app-v2'
+const dynamicCacheName = 'd-app-v3'
 
 const assetUrls = [
     'index.html',
-    'static/js/main.9960ac34.js',
+    'static/js/bundle.js',
     // todo add css file
 ]
 self.addEventListener('install', async event=>{
     console.log('[SW] install');
     const cache = await caches.open(staticCacheName);
     await cache.addAll(assetUrls);
+
 });
 
 self.addEventListener('activate', async event=>{
@@ -34,7 +35,7 @@ async function networkFirst(request) {
         await cache.put(request, response.clone())
         return response
     } catch (e) {
-        console.log('logs in networkFirst error', e)
+        console.log('logs in networkFirst error', )
         const cached = await cache.match(request)
         return cached;
     }
@@ -43,8 +44,8 @@ async function networkFirst(request) {
 self.addEventListener('fetch', event=>{
     const {request} = event;
     const url = new URL(request.url);
-    console.log('logs request.url', request.url)
-    if(url.origin === location.origin && !url.href.includes('api')){
+    console.log('logs url.origin', url.origin)
+    if(url.origin === location.origin){
         event.respondWith(cacheFirst(event.request));
     } else {
         event.respondWith(networkFirst(event.request))
