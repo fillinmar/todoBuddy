@@ -5,12 +5,16 @@ const { ObjectId } = require("mongodb");
 
 const  getCollection = () =>{
     const client = getConnectedClient();
-    return client.db("todosbd").collection("todos");
+    return client?.db("todosbd").collection("todos");
 }
 
 //GET /todos
 router.get("/todos", async (req, res)=> {
     const collection = getCollection();
+    if (!collection){
+        res.status(500).json({mes:'err: cannot get collection'});
+        return
+    }
     const todos = await collection.find({}).toArray();
     res.status(200).json(todos)
 })
@@ -21,6 +25,7 @@ router.post("/todos", async (req, res)=>{
 
     if(!todo) {
         res.status(400).json({mes:'err: no todo find'})
+        return
     }
     const newTodo = await collection.insertOne({todo: todo || 'my fist todo', status: false})
 

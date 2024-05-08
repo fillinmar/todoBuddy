@@ -1,0 +1,25 @@
+.todo {
+    display: flex;
+    width: 100%;
+    border-color: #D0E5F9;
+    border-top: 1px solid #D0E5F9;
+}
+
+.todo__name {
+    flex-grow: 1;
+    margin: 0 0 0 8px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+}
+
+.done .todo__name {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.todo_button {
+    all: unset;
+    margin: 12px;
+    cursor: pointer;
+}

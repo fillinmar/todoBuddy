@@ -1,0 +1,67 @@
+.notepad-container {
+    margin: 24px 16px;
+    flex-grow: 1;
+    display: flex;
+}
+
+.notepad {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 16px;
+    background: #FFF;
+}
+
+.notepad-header {
+    display: flex;
+    padding: 0 12px;
+    justify-content: center;
+    align-items: center;
+    align-self: stretch;
+}
+
+.pins-container {
+    width: 100%;
+    padding: 0 6px;
+}
+
+.pins {
+    position: relative;
+    top: -10px;
+    height: 38px;
+    width: 100%;
+    background-repeat: space;
+    background-image: url( '../../static/pin.svg' );
+}
+
+.addTaskContainer {
+    margin: 16px 0 0 0;
+    width: 100%;
+    display: flex;
+}
+
+.cross {
+    padding: 12px;
+    cursor: pointer;
+}
+
+.addTask {
+    all: unset;
+    width: 100%;
+    text-align: left;
+    margin: 0 0 0 8px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+}
+
+.freeSpace {
+    flex-grow: 1;
+    width: 100%;
+    background-image: linear-gradient(to bottom, #D0E5F9 1px, transparent 1px);
+    background-size: 100% 48px;
+}
