@@ -3,7 +3,8 @@ const dynamicCacheName = 'd-app-v3'
 
 const assetUrls = [
     'index.html',
-    'static/js/bundle.js',
+    'static/js/main.5e5ea29f.js',
+    'static/css/main.71a5b160.css',
     // todo add css file
 ]
 self.addEventListener('install', async event=>{
@@ -16,6 +17,7 @@ self.addEventListener('install', async event=>{
 self.addEventListener('activate', async event=>{
     console.log('[SW] activate');
     const cachesNames = await caches.keys();
+    // Clearing the cache
     await Promise.all(
         cachesNames.filter(name => name !== staticCacheName &&  name !== dynamicCacheName)
             .map(name=> caches.delete(name))
@@ -23,19 +25,23 @@ self.addEventListener('activate', async event=>{
 });
 
 async function cacheFirst(request) {
-    const cached =await caches.match(request);
-    return cached ?? await fetch(request);
+    const cache = await caches.open(staticCacheName);
+    const cachedRequest =await cache.match(request);
+    if (cachedRequest) {
+        return cachedRequest
+    }
+    const response =  await fetch(request);
+    await cache.put(request, response.clone())
+    return response
 }
 
 async function networkFirst(request) {
     const cache = await caches.open(dynamicCacheName)
     try {
         const response = await fetch(request);
-        console.log('logs in networkFirst response', response)
         await cache.put(request, response.clone())
         return response
     } catch (e) {
-        console.log('logs in networkFirst error', )
         const cached = await cache.match(request)
         return cached;
     }
