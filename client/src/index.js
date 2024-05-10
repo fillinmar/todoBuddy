@@ -4,11 +4,9 @@ import './index.css';
 import App from './App';
 
 window.addEventListener('load', async () => {
-    console.log('logs load',);
-    if (navigator.serviceWorker) {
+    if (navigator.serviceWorker && !(window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")) {
         try {
             const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
-            console.log('logs swUrl', swUrl)
             await navigator.serviceWorker.register(swUrl);
             console.log('service  worker register correct');
         } catch (e) {

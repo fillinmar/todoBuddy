@@ -10,7 +10,6 @@ self.addEventListener('install', async event=>{
     console.log('[SW] install');
     const cache = await caches.open(staticCacheName);
     await cache.addAll(assetUrls);
-
 });
 
 self.addEventListener('activate', async event=>{
