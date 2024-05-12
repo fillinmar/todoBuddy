@@ -36,12 +36,20 @@ async function cacheFirst(request) {
 }
 
 async function networkFirst(request) {
+    console.log('logs in networkFirst', request.method, request.method === 'POST')
+    if(request.method === 'POST' || request.method === 'DELETE') {
+        // todo: обновить кеш
+        const result = await fetch(request);
+        console.log('logs result', result)
+        return result;
+    }
     const cache = await caches.open(dynamicCacheName)
     try {
         const response = await fetch(request);
         await cache.put(request, response.clone())
         return response
     } catch (e) {
+        console.log('[ERROR]: in networkFirst, error:', e)
         const cached = await cache.match(request)
         return cached;
     }
@@ -49,9 +57,9 @@ async function networkFirst(request) {
 
 self.addEventListener('fetch', event=>{
     const {request} = event;
+    console.log('logs event', event)
     const url = new URL(request.url);
-    console.log('logs url.origin', url.origin)
-    if(url.origin === location.origin){
+    if (url.origin === location.origin && !url.pathname.includes('api')) {
         event.respondWith(cacheFirst(event.request));
     } else {
         event.respondWith(networkFirst(event.request))

@@ -5,17 +5,24 @@ export default function CreateTodo({updateTodoList}) {
     const [content, setContent] = useState("");
     const createNewTodo = async () => {
         if (content.length > 0) {
-            const res = await fetch("/api/todos", {
-                method: "POST",
-                body: JSON.stringify({todo: content}),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            const newTodo = await res.json();
+            let res;
+            try {
+                res = await fetch("/api/todos", {
+                    method: "POST",
+                    body: JSON.stringify({todo: content}),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+            } catch (e) {
+                console.log('[API]: cannot create todo, error:', e)
+            }
+            if (res) {
+                const newTodo = res && await res.json();
 
-            setContent("");
-            updateTodoList(newTodo);
+                setContent("");
+                updateTodoList(newTodo);
+            }
         }
     }
     return (
