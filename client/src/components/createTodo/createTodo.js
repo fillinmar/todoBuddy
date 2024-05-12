@@ -31,6 +31,11 @@ export default function CreateTodo({updateTodoList}) {
             <input
                 type="text"
                 value={content}
+                onKeyDown={(event)=>{
+                    if (event.key === 'Enter') {
+                        createNewTodo()
+                    }
+                }}
                 onChange={(e) => setContent(e.target.value)}
                 placeholder="Enter a new todo..."
                 className="addTask"

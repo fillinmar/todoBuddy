@@ -1,15 +1,16 @@
-const staticCacheName ='a-app-v3';
-const dynamicCacheName = 'd-app-v4'
+const staticCacheName ='a-app-v5';
+const dynamicCacheName = 'd-app-4'
 
 const assetUrls = [
     'index.html',
-    'static/js/main.0dc86373.js',
+    'static/js/main.5e5ea29f.js',
     'static/css/main.71a5b160.css',
+    // todo add css file
 ]
 self.addEventListener('install', async event=>{
     console.log('[SW] install');
-    const cache = await caches.open(staticCacheName);
-    await cache.addAll(assetUrls);
+    // const cache = await caches.open(staticCacheName);
+    // await cache.addAll(assetUrls);
 
 });
 
@@ -19,7 +20,10 @@ self.addEventListener('activate', async event=>{
     // Clearing the cache
     await Promise.all(
         cachesNames.filter(name => name !== staticCacheName &&  name !== dynamicCacheName)
-            .map(name=> caches.delete(name))
+            .map(name=> {
+                console.log('logs name', name)
+                caches.delete(name)
+            })
     )
 });
 
@@ -35,8 +39,7 @@ async function cacheFirst(request) {
 }
 
 async function networkFirst(request) {
-    console.log('logs in networkFirst', request.method, request.method === 'POST')
-    if(request.method === 'POST' || request.method === 'DELETE') {
+    if(request.method === 'POST' || request.method === 'DELETE' || request.method === 'PUT') {
         // todo: обновить кеш
         const result = await fetch(request);
         console.log('logs result', result)
