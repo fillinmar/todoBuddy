@@ -1,7 +1,6 @@
-const  showNotification = async (body) => {
+const showNotification = async (body) => {
     const registration = await navigator.serviceWorker.getRegistration();
-    console.log('logs registration', registration)
-    const title = 'What PWA Can Do Today';
+    const title = 'Не забудь выполнить';
 
     const payload = {
         body
@@ -15,16 +14,16 @@ const  showNotification = async (body) => {
     }
 };
 
-export const handleNotification = async () => {
+export const handleNotification = async (value) => {
     if(Notification.permission === 'granted') {
-        await showNotification('notification.value');
+        await showNotification(value);
     }
     else {
         if(Notification.permission !== 'denied') {
             const permission = await Notification.requestPermission();
 
             if(permission === 'granted') {
-                await showNotification('notification.value');
+                await showNotification(value);
             }
         }
     }

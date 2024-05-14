@@ -23,8 +23,7 @@ export default function CreateTodo({updateTodoList}) {
 
                 setContent("");
                 updateTodoList(newTodo);
-                await handleNotification()
-                setTimeout(await handleNotification(), 30*1000);
+                setTimeout(await handleNotification(content), 30*1000);
             }
         }
     }
