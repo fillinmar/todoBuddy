@@ -1,5 +1,6 @@
 import {ReactComponent as CrossSvg} from '../../static/cross.svg';
 import {useState} from "react";
+import {handleNotification} from "../../helpers/notification";
 
 export default function CreateTodo({updateTodoList}) {
     const [content, setContent] = useState("");
@@ -22,6 +23,8 @@ export default function CreateTodo({updateTodoList}) {
 
                 setContent("");
                 updateTodoList(newTodo);
+                await handleNotification()
+                setTimeout(await handleNotification(), 30*1000);
             }
         }
     }
