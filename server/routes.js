@@ -3,7 +3,7 @@ const router = express.Router();
 const {getConnectedClient} = require("./database");
 const { ObjectId } = require("mongodb");
 
-const  getCollection = () =>{
+const  getCollection = () => {
     const client = getConnectedClient();
     return client?.db("todosbd").collection("todos");
 }
@@ -43,6 +43,12 @@ router.delete("/todos/:id", async(req, res)=>{
 // PUT /todos/:id
 router.put("/todos/:id", async(req, res)=>{
     const collection = getCollection();
+
+    if (!collection){
+        res.status(500).json({mes:'err: cannot get collection'});
+        return
+    }
+
     const _id = new ObjectId(req.params.id);
     const {status} = req.body;
 

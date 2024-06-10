@@ -5,11 +5,14 @@ import Todo from "../Todo/Todo";
 
 export default function Notepad() {
     const [todos, setTodos] = useState([]);
-    console.log('logs todos', todos)
     const getTodos= useCallback(async ()=>{
-        const res = await fetch('/api/todos');
-        const todos = await res.json();
-        setTodos(todos)
+        try {
+            const res = await fetch('/api/todos');
+            const todos = res && await res.json();
+            setTodos(todos)
+        } catch (error) {
+            console.log('[api error]', error);
+        }
     }, [])
 
     useEffect(() => {

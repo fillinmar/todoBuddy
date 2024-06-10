@@ -1,0 +1,38 @@
+.installAppModal {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+}
+
+.installAppModal__container {
+    width: 100%;
+}
+
+.installAppModal__content {
+    margin: 30px;
+    position: relative;
+}
+
+.installAppModal__content ol {
+    padding: 0;
+}
+
+.installAppModal__cross {
+    right: 0;
+    position: absolute;
+}
+
+.itemStep {
+    white-space: nowrap;
+    gap: .5rem;
+    align-items: center;
+    display: flex;
+}
+
+.itemStep svg {
+    height: 26px;
+}
